@@ -1,4 +1,4 @@
-// {name: "Mahir asief", email: "asiefmahir1@gmail.com", phone: "+885454540", skills: ["Js", "react", "redux"], interests: ["Chess", "football"]}
+// {name: "Mahir asief", email: "asiefmahir1@gmail.com", phone: "+885454540", skills: ["Js", "react", "redux"], interests: ["Chess", "football"] }
 
 const BioData = (props) => {
 	// props ->

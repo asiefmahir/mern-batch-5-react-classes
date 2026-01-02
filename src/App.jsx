@@ -1,98 +1,159 @@
-import "./App.css";
-import { useState, useEffect } from "react";
-// const add = (a, b) => {
-// 	return a + b
-// }
+import { useState, useEffect, useRef } from "react";
 
-// add(10 , 20)
+const App = () => {
+	console.log("i am being rerendered");
 
-function App() {
-	const [posts, setPosts] = useState([]);
-	const [counter, setCounter] = useState(0);
-	const [counter2, setCounter2] = useState(10);
-	// const [loading, setLoad]
-	// posts = data
-	// let count = 0;
+	const [todoList, setTodoList] = useState([]);
+	const [currentFilter, setCurrentFilter] = useState("all");
+	const inputRef = useRef(null);
+	// {current: null}
+	// inputRef.current.focus();
 
+	// const intervalId = setInterval(() => {});
+	// console.log(ref);
+
+	const getAllTodos = async () => {
+		const API = `http://localhost:4000/todo`;
+		let url = API;
+
+		if (currentFilter === "active") {
+			url += `?isCompleted=false`;
+			// url = `http://localhost:4000/todo?isCompleted=false`;
+		} else if (currentFilter === "completed") {
+			url += `?isCompleted=true`;
+			// url = `http://localhost:4000/todo?isCompleted=true`
+		}
+
+		const res = await fetch(url);
+		const data = await res.json();
+		console.log(data, "data");
+		setTodoList(data);
+	};
 	useEffect(() => {
-		// js
-		// promise in javascript
-		console.log("I am inside useEffect");
-		const getAllPosts = async () => {
-			const res = await fetch(
-				`https://jsonplaceholder.typicode.com/posts`,
-			);
-			console.log(res, "res");
-			const data = await res.json();
-			console.log(data, "data");
-			setPosts(data);
+		console.log(inputRef, "ref");
+		inputRef.current.focus();
+		// eslint-disable-next-line react-hooks/set-state-in-effect
+		getAllTodos();
+	}, [currentFilter]);
+
+	const submitHandler = async (e) => {
+		const todoTitle = inputRef.current.value;
+		e.preventDefault();
+		if (!todoTitle.trim())
+			return alert(`Please provide a valid todo title`);
+
+		const newTodo = {
+			title: todoTitle,
+			isCompleted: false,
 		};
 
-		// js single threaded
-		getAllPosts();
-	}, []);
+		await fetch(`http://localhost:4000/todo`, {
+			method: "POST",
+			body: JSON.stringify(newTodo),
+			headers: {
+				"Content-type": "application/json",
+			},
+		});
 
-	console.log("I am outside useEffect");
+		// Refetch
+		getAllTodos();
+		// setTodoTitle("");
 
-	// setTimeout()
-	// document.getElementById()
+		// refetch
 
-	// fetch()
+		// setTodoList([...todoList, newTodo]);
+	};
 
-	// Error()
+	const toggleIsCompleted = async (todo) => {
+		// update / delete
+		await fetch(`http://localhost:4000/todo/${todo.id}`, {
+			method: "PATCH",
+			body: JSON.stringify({ isCompleted: !todo.isCompleted }),
+			headers: {
+				"Content-type": "application/json",
+			},
+		});
+		// refetch
+		getAllTodos();
+	};
 
+	const removeHandler = async (todoId) => {
+		// delete
+		await fetch(`http://localhost:4000/todo/${todoId}`, {
+			method: "DELETE",
+		});
+		// refetch
+		getAllTodos();
+	};
+	// 'all' || 'completed' || 'active'
 	return (
-		<div className="app">
-			<h2>All Posts</h2>
-			<div className="counter-app">
-				<p>The value of the counter is {counter}</p>
-				<button onClick={() => setCounter(counter + 1)}>
-					Increase By 1
+		<div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow">
+			<h2 className="text-2xl font-semibold text-center mb-6">
+				Connecting APIS with our components
+			</h2>
+			<form onSubmit={submitHandler} className="flex gap-2 mb-4">
+				<input
+					ref={inputRef}
+					type="text"
+					// value={todoTitle}
+					// onChange={(e) => setTodoTitle(e.target.value)}
+					placeholder="Enter Todo Title..."
+					className="flex-1 px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 "
+				/>
+				<button
+					type="submit"
+					className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+				>
+					Create Todo
 				</button>
-			</div>
-			<hr />
-			<div className="counter-app">
-				<p>The value of the counter is {counter2}</p>
-				<button onClick={() => setCounter2(counter2 + 10)}>
-					Increase By 10
-				</button>
-			</div>
-			<ul>
-				{posts.map((post) => (
-					<li key={post.id}>{post.title}</li>
+			</form>
+			<select
+				className="w-full mb-4 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+				value={currentFilter}
+				onChange={(e) => setCurrentFilter(e.target.value)}
+			>
+				<option value="all">All</option>
+				<option value="completed">Completed</option>
+				<option value="active">Active</option>
+			</select>
+
+			<ul className="space-y-2">
+				{todoList.map((todo) => (
+					<li
+						key={todo.id}
+						className="flex items-center justify-between p-3 border rounded-md"
+					>
+						<div>
+							<input
+								type="checkbox"
+								checked={todo.isCompleted}
+								onChange={() => toggleIsCompleted(todo)}
+								className="h-4 w-4"
+							/>
+							<span
+								className={`${
+									todo.isCompleted
+										? "line-through text-gray-400"
+										: "text-gray-800"
+								}`}
+							>
+								{todo.title}
+							</span>
+							<button className="text-sm text-red-600 hover:text-red-800">
+								Edit
+							</button>
+							<button
+								className="text-sm text-red-600 hover:text-red-800"
+								onClick={() => removeHandler(todo.id)}
+							>
+								Delete
+							</button>
+						</div>
+					</li>
 				))}
 			</ul>
 		</div>
 	);
-}
-// component has 2 layer
-
-// 1) presentation layer -> html, css/ design layer -> web designer
-// 2) data layer -> i) props ii) state -> dynamic data -> web app developer
-
-// BioData()
-// component ->
-// 1) A component must be a function
-// 2) That function should return "something"
-// 3) That "something" should be some html-ish code (jsx)
+};
 
 export default App;
-
-// jsx- > html-ish code -> javascript xml
-
-// asynchronous js -> promised base
-// state mechanism
-// rendering re-rendering
-
-// fetch('')
-// 	.then()
-// 	.then()
-// 	.catch(err => {
-
-// 	})
-
-// class Person {
-
-// }
-
-// const Person =

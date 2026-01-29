@@ -17,6 +17,10 @@ const Shop = () => {
 		};
 
 		getAllProducts();
+		// // when unmount
+		// return () => {
+		// 	clearInterval();
+		// };
 	}, []);
 	return (
 		<>

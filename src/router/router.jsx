@@ -7,6 +7,8 @@ import Login from "../pages/Login";
 import AddProduct from "../pages/AddProduct";
 import PrivateAdminRoute from "../components/PrivateAdminRoute";
 import PrivateLoggedInRoute from "../components/PrivateLoggedInRoute";
+import EditProduct from "../pages/EditProduct";
+import AdminProductList from "../pages/AdminProducts";
 
 export const rootRouter = createBrowserRouter([
 	{
@@ -29,6 +31,22 @@ export const rootRouter = createBrowserRouter([
 				element: (
 					<PrivateAdminRoute>
 						<AddProduct />
+					</PrivateAdminRoute>
+				),
+			},
+			{
+				path: "/admin/product-listing",
+				element: (
+					<PrivateAdminRoute>
+						<AdminProductList />
+					</PrivateAdminRoute>
+				),
+			},
+			{
+				path: "/admin/edit-product/:id",
+				element: (
+					<PrivateAdminRoute>
+						<EditProduct />
 					</PrivateAdminRoute>
 				),
 			},

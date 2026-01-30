@@ -16,6 +16,11 @@ const Nav = () => {
 						<Link to="/add-product">Add Product</Link>
 					</li>
 				)}
+				{userLoggedIn && role === "admin" && (
+					<li>
+						<Link to="/admin/product-listing">All Products</Link>
+					</li>
+				)}
 				{!userLoggedIn && (
 					<>
 						<li>

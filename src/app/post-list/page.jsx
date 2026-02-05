@@ -1,0 +1,26 @@
+// server component // server-only-component
+// only will render in either build-time or in the hosted server
+// server component
+
+import Link from "next/link";
+
+const PostList = async () => {
+	const res = await fetch(
+		`https://jsonplaceholder.typicode.com/posts?_limit=5`,
+	);
+	const posts = res.json();
+	return (
+		<div>
+			<h2>PostList</h2>
+			<ul>
+				{posts?.map((post) => (
+					<li key={post.id}>
+						<Link href={`/post-list/${post.id}`}>{post.title}</Link>
+					</li>
+				))}
+			</ul>
+		</div>
+	);
+};
+
+export default PostList;

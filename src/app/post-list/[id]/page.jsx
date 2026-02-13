@@ -9,11 +9,16 @@ import React from "react";
 // 5
 
 // cron job
+import { notFound, redirect } from "next/navigation";
 
+// export const dynamicParams = false;
 const PostDetails = async ({ params }) => {
 	const { id } = await params;
 	const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
 	const post = await res.json();
+	if (!post?.title) {
+		notFound();
+	}
 	return (
 		<div>
 			<h2>I am postdetails page of {post?.id}</h2>

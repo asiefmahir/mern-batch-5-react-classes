@@ -1,0 +1,46 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "title": "prod-1",
+      "price": 265,
+      "image": "https://images.pexels.com/photos/247759/pexels-photo-247759.jpeg?_gl=1*cs6at4*_ga*NDg2MTEwMDg3LjE3NjI2MTIzMTc.*_ga_8JE65Q40S6*czE3NzA3Mzg2MDAkbzEwJGcwJHQxNzcwNzM4NjAwJGo2MCRsMCRoMA.."
+    },
+    {
+      "id": "2",
+      "title": "prod-1",
+      "price": 265,
+      "image": "https://images.pexels.com/photos/35825598/pexels-photo-35825598.jpeg?_gl=1*fx1lo4*_ga*NDg2MTEwMDg3LjE3NjI2MTIzMTc.*_ga_8JE65Q40S6*czE3NzA3Mzg2MDAkbzEwJGcxJHQxNzcwNzM4NjMwJGozMCRsMCRoMA.."
+    },
+    {
+      "title": "tomato",
+      "price": 458,
+      "image": "https://res.cloudinary.com/dcdga3gke/image/upload/v1770739823/vqgz2ocqxgzrj2jvvjpp.jpg",
+      "id": "F9Hn1Xe"
+    },
+    {
+      "title": "Demo Prod",
+      "price": 280,
+      "image": "https://res.cloudinary.com/dcdga3gke/image/upload/v1770740340/htiiiqbkivptzihpis1p.jpg",
+      "id": "sDOWpDo"
+    },
+    {
+      "title": "New Product",
+      "price": 100,
+      "image": "https://res.cloudinary.com/dcdga3gke/image/upload/v1770740786/chtagyylnvy9kbxnhmsx.jpg",
+      "id": "J7QN1My"
+    },
+    {
+      "title": "Something",
+      "price": 690,
+      "image": "https://res.cloudinary.com/dcdga3gke/image/upload/v1770740910/nhtfyayxh5ugfoe4p7np.jpg",
+      "id": "MYK0igK"
+    },
+    {
+      "title": "Product 3",
+      "price": 180,
+      "image": "https://res.cloudinary.com/dcdga3gke/image/upload/v1770741209/klbroefr1qeqt2wydzk4.jpg",
+      "id": "8JVFvFp"
+    }
+  ]
+}

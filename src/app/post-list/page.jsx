@@ -8,7 +8,7 @@ const PostList = async () => {
 	const res = await fetch(
 		`https://jsonplaceholder.typicode.com/posts?_limit=5`,
 	);
-	const posts = res.json();
+	const posts = await res.json();
 	return (
 		<div>
 			<h2>PostList</h2>

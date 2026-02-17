@@ -6,7 +6,7 @@ import { updateTag } from "next/cache";
 
 // server action
 export const addProduct = async (product) => {
-	await fetch(`http://localhost:4000/products`, {
+	await fetch(`http://localhost:3000/api/product`, {
 		method: "POST",
 		body: JSON.stringify(product),
 		headers: {

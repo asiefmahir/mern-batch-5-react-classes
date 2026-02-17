@@ -1,12 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 const AdminProductList = async () => {
-	const res = await fetch(`http://localhost:4000/products`, {
+	const res = await fetch(`http://localhost:3000/api/product`, {
 		next: { tags: ["products"] },
 	});
-
-	// rtk query
-	const products = await res.json();
-	console.log("I am being re-rendered");
+	const { success, products } = await res.json();
+	console.log("I am being rendered");
 
 	// backend -> microservice
 	// daraz -> order, inventory, crm, vendor-management // microservice
@@ -45,7 +43,7 @@ const AdminProductList = async () => {
 				</thead>
 				<tbody>
 					{products.map((prod) => (
-						<tr key={prod.id}>
+						<tr key={prod._id}>
 							<td style={{ padding: 8 }}>
 								<img
 									src={prod.image}

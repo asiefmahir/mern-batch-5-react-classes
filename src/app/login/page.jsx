@@ -1,11 +1,14 @@
-
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import classes from "../login/login.module.css";
+import classes from "./login.module.css";
+import { signIn } from "next-auth/react";
 
-const Register = () => {
-	const [name, setName] = useState("");
+{
+	/* <Image /> */
+}
+
+export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isLoading, setLoading] = useState(false);
@@ -17,19 +20,17 @@ const Register = () => {
 		e.preventDefault();
 		setLoading(true);
 		try {
-			const res = await fetch("/api/register", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ name, email, password }),
+			const result = await signIn("credentials", {
+				redirect: false,
+				email,
+				password,
 			});
-			const data = await res.json();
-			if (!res.ok) {
+
+			if (result?.error) {
 				setLoading(false);
-				setErrorMessage(data?.err);
+				setErrorMessage(result.error);
 			} else {
-				router.push("/login");
+				router.push("/");
 			}
 		} catch (error) {
 			setLoading(false);
@@ -40,18 +41,8 @@ const Register = () => {
 	return (
 		<main>
 			<section className={classes.auth}>
-				<h1>Please Register</h1>
+				<h1>Login</h1>
 				<form onSubmit={submitHandler}>
-					<div className={classes.control}>
-						<label htmlFor="name">Your Name</label>
-						<input
-							type="text"
-							id="name"
-							required
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-						/>
-					</div>
 					<div className={classes.control}>
 						<label htmlFor="email">Your Email</label>
 						<input
@@ -73,16 +64,14 @@ const Register = () => {
 						/>
 					</div>
 					<div className={classes.actions}>
-						{!isLoading && <button>Register</button>}
-						{isLoading && <p>Creating New User</p>}
+						{!isLoading && <button>Login</button>}
+						{isLoading && <p>Sending request...</p>}
 						{errorMessage && (
-							<p style={{ color: "red" }}>{errorMessage}</p>
+							<h3 style={{ color: "red" }}>{errorMessage}</h3>
 						)}
 					</div>
 				</form>
 			</section>
 		</main>
 	);
-};
-
-export default Register;
+}

@@ -38,10 +38,12 @@ const connectDb = async () => {
 			socketTimeoutMs: 45000, // 45s
 		};
 
-		cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
-			console.log("Successfully Connected to Mongodb");
-			return mongoose;
-		});
+		cached.promise = mongoose
+			.connect(MONGODB_URI, opts)
+			.then((mongoose) => {
+				console.log("Successfully Connected to Mongodb");
+				return mongoose;
+			});
 	}
 
 	try {

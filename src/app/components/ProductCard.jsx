@@ -2,7 +2,7 @@
 "use client";
 
 import { useDispatch } from "react-redux";
-import { addToCart } from "../store/reducers/cart";
+import { addToCart } from "@/app/store/reducers/cart";
 
 // interactivity -> next
 

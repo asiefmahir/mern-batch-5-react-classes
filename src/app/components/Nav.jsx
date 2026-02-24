@@ -34,12 +34,20 @@ const Nav = () => {
 				<li>
 					<Link href="/about">About</Link>
 				</li>
-				<li>
-					<Link href="/add-product">Add product</Link>
-				</li>
-				<li>
-					<Link href="/admin-products">Admin products</Link>
-				</li>
+				{data?.user?.role === "admin" && (
+					<>
+						<li>
+							<Link href="/dashboard/admin/add-product">
+								Add product
+							</Link>
+						</li>
+						<li>
+							<Link href="/dashboard/admin/admin-products">
+								Admin products
+							</Link>
+						</li>
+					</>
+				)}
 				<li>
 					<Link href="/post-list">PostList</Link>
 				</li>

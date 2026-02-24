@@ -2,7 +2,7 @@
 
 "use client";
 import { useState } from "react";
-import { addProduct } from "../actions/product";
+import { addProduct } from "@/app/actions/product";
 
 const AddProductForm = () => {
 	const [product, setProduct] = useState({

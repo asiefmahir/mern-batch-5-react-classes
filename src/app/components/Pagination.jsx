@@ -3,9 +3,26 @@
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
+//ssr -> comparatively slow
 const Pagination = ({ totalPages, pathname }) => {
-	
+	const params = useSearchParams();
+	const router = useRouter();
 
+	const createQueryString = (paramName, value) => {
+		let newParams = new URLSearchParams(params.toString());
+		newParams.set(paramName, value);
+
+		const queryString = newParams.toString();
+
+		const newUrl = `${pathname}?${queryString}`;
+		console.log(newUrl);
+
+		router.push(newUrl);
+
+		// "?page=2"
+	};
+
+	// 3 // length = 3
 	return (
 		<div className="text-center">
 			<div>
@@ -21,10 +38,12 @@ const Pagination = ({ totalPages, pathname }) => {
 										padding: "5px",
 									}}
 									key={page}
-									className="m-[10px] border-blue-300 p-[5px] bg-[aqua]"
+									className="mr-2.5 border-blue-300 p-1.25 bg-[aqua]"
 								>
 									<button
-										
+										onClick={() =>
+											createQueryString("page", page)
+										}
 									>
 										{page}
 									</button>

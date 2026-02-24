@@ -1,12 +1,33 @@
 import ProductCard from "./components/ProductCard";
+import Pagination from "./components/Pagination";
 
+const getProducts = async (searchParams) => {
+	const searchQuery = new URLSearchParams({
+		page: searchParams.page,
+	}).toString();
+	console.log(searchQuery, "searchQuery");
+
+	const baseUrl = `http://localhost:3000/api/product?${searchQuery}`;
+
+	const res = await fetch(baseUrl);
+
+	if (!res.ok) {
+		throw new Error("Failed to Fetch Products");
+	}
+	const data = await res.json();
+
+	return {
+		products: data.products,
+		success: data.success,
+		currentPage: data.currentPage,
+		totalPages: data.totalPages,
+	};
+};
 // ssg, isr, ssr
-const Shop = async () => {
-	const res = await fetch(`http://localhost:3000/api/product`, {
-		next: { tags: ["products"] },
-	});
-	const { success, products } = await res.json();
-	console.log("I am being rendered");
+const Shop = async ({ searchParams }) => {
+	const params = await searchParams;
+	const { products, success, currentPage, totalPages } =
+		await getProducts(params);
 
 	return (
 		<>
@@ -53,6 +74,7 @@ const Shop = async () => {
 					</div>
 				</div>
 			</div>
+			<Pagination pathname={"/"} totalPages={totalPages} />
 		</>
 	);
 };

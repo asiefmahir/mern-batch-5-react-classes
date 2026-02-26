@@ -9,38 +9,55 @@ export async function GET(req) {
 	// console.log(req.url, "url");
 
 	const page = searchParams.get("page") || {};
+	const minPrice = searchParams.get("minPrice") || "";
+	const maxPrice = searchParams.get("maxPrice") || "";
+	const category = searchParams.get("category") || "";
 	console.log(page, "page");
 
 	//api/product
 	// {page: 5}
 
 	const pageSize = 2;
+
+	const filter = {};
+
+	if (category && category.trim()) {
+		filter.category = category.trim();
+	}
+	if (minPrice && maxPrice) {
+		filter.price = { $gte: Number(minPrice), $lte: Number(maxPrice) };
+	}
+
 	try {
 		const currentPage = Number(page) || 1;
 		// calculating the skip number
 		const skip = (currentPage - 1) * pageSize;
+		const filteredProducts = await Product.find(filter)
+			.skip(skip)
+			.limit(pageSize)
+			.sort({ createdAt: -1 });
 		// skip    = (5 - 1) * 5
 		// skip = 20
 		// 24        (5 - 1) * 6
 		// = 4 * 6
 		// 24
 		// total number of documents in product collection
-		const totalProducts = await Product.countDocuments();
+		const totalProducts = await Product.countDocuments(filter);
 		// 25 -> 26 -> 27 -> 28 -> 29 -> 30
 		// db_product_count -> 100
 		// apple -> 30
 		// page ->
 
-		const products = await Product.find({})
-			.skip(skip)
-			// the number of documents returned by mongodb after implementing the skip
-			.limit(pageSize)
-			.sort({ createdAt: -1 });
+		// const products = await Product.find({})
+		// 	.skip(skip)
+		// 	// the number of documents returned by mongodb after implementing the skip
+		// 	.limit(pageSize)
+		// 	.sort({ createdAt: -1 });
 
 		// response back to your react app
 		return NextResponse.json({
 			success: true,
-			products,
+			products: filteredProducts,
 			currentPage,
 			totalPages: Math.ceil(totalProducts / pageSize),
 		});

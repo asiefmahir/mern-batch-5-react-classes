@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useDispatch } from "react-redux";
-import { addToCart } from "@/app/store/reducers/cart";
+import { useCart } from "../contexts/Cart";
 
 // interactivity -> next
 
@@ -14,7 +13,7 @@ import { addToCart } from "@/app/store/reducers/cart";
 // google classroom ->
 
 function ProductCard({ product }) {
-	const dispatch = useDispatch();
+	const { addToCart } = useCart();
 	return (
 		<div className="ingredient">
 			<div className="ingredient__image">
@@ -32,7 +31,7 @@ function ProductCard({ product }) {
 			</div>
 			<div className="ingredient__btn">
 				<button
-					onClick={(e) => dispatch(addToCart(product))}
+					onClick={(e) => addToCart(product)}
 					className="btn-white"
 				>
 					ADD TO CART

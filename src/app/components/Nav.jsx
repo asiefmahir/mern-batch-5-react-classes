@@ -32,7 +32,7 @@ const Nav = () => {
 					</>
 				)}
 				<li>
-					<Link href="/about">About</Link>
+					<Link href="/shop">Shop</Link>
 				</li>
 				{data?.user?.role === "admin" && (
 					<>
@@ -49,7 +49,7 @@ const Nav = () => {
 					</>
 				)}
 				<li>
-					<Link href="/post-list">PostList</Link>
+					<Link href="/cart">Your Cart</Link>
 				</li>
 				{status === "authenticated" && (
 					<li>

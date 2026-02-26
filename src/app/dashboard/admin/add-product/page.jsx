@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addProduct } from "@/app/actions/product";
 
 const AddProductForm = () => {
@@ -9,7 +10,18 @@ const AddProductForm = () => {
 		title: "",
 		price: "",
 		image: "",
+		category: "",
 	});
+	const [categories, setCategories] = useState([]);
+	useEffect(() => {
+		const getAllCategories = async () => {
+			const res = await fetch(`/api/category`);
+			const data = await res.json();
+			setCategories(data);
+			setProduct({ ...product, category: data[0]._id });
+		};
+		getAllCategories();
+	}, []);
 
 	const handleChange = (e) => {
 		setProduct({
@@ -80,17 +92,18 @@ const AddProductForm = () => {
 					required
 				/>
 				<br />
-				{/* <select
-					name="categoryId"
-					value={product.categoryId}
+
+				<select
+					name="category"
+					value={product.category}
 					onChange={handleChange}
 				>
 					{categories.map((cat) => (
-						<option key={cat.id} value={cat.id}>
-							{cat.name}
+						<option key={cat._id} value={cat._id}>
+							{cat.title}
 						</option>
 					))}
-				</select> */}
+				</select>
 
 				<p>Image URL:</p>
 

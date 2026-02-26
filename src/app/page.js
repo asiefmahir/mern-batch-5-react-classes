@@ -1,15 +1,17 @@
 import ProductCard from "./components/ProductCard";
 import Pagination from "./components/Pagination";
+import { getBaseUrl } from "./utils/api";
 
 const getProducts = async (searchParams) => {
 	const searchQuery = new URLSearchParams({
 		page: searchParams.page,
 	}).toString();
 	console.log(searchQuery, "searchQuery");
+	const baseUrl = getBaseUrl();
 
-	const baseUrl = `http://localhost:3000/api/product?${searchQuery}`;
+	const url = `${baseUrl}/api/product?${searchQuery}`;
 
-	const res = await fetch(baseUrl);
+	const res = await fetch(url);
 
 	if (!res.ok) {
 		throw new Error("Failed to Fetch Products");

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+// rtk query
 
 export const cartSlice = createSlice({
 	name: "cart",

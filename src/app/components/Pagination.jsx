@@ -38,7 +38,7 @@ const Pagination = ({ totalPages, pathname }) => {
 										padding: "5px",
 									}}
 									key={page}
-									className="mr-2.5 border-blue-300 p-1.25 bg-[aqua]"
+									className="mr-2.5 gap-1 border-blue-300 p-1.25 bg-[aqua]"
 								>
 									<button
 										onClick={() =>

@@ -3,7 +3,7 @@ import "./globals.css";
 import Nav from "./components/Nav";
 import StoreProvider from "./components/StoreProvider";
 import SessionProviderWrapper from "./components/SessionProviderWrapper";
-
+import CartProviderWrapper from "./components/CartProviderWrapper";
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -25,8 +25,10 @@ export default function RootLayout({ children }) {
 			<body className={`${geistSans.variable} ${geistMono.variable}`}>
 				<SessionProviderWrapper>
 					<StoreProvider>
-						<Nav />
-						{children}
+						<CartProviderWrapper>
+							<Nav />
+							{children}
+						</CartProviderWrapper>
 					</StoreProvider>
 				</SessionProviderWrapper>
 			</body>

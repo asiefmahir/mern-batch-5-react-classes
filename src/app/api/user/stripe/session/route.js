@@ -76,7 +76,7 @@ export async function POST(req) {
 		});
 
 		let success_url = process.env.VERCEL_PROJECT_PRODUCTION_URL
-			? process.env.VERCEL_PROJECT_PRODUCTION_URL
+			? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
 			: "http://localhost:3000/";
 		console.log(success_url, "iiii");
 

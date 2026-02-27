@@ -47,6 +47,7 @@ const Shop = async ({ searchParams }) => {
 							<h2>All Products</h2>
 						</div>
 					</div>
+
 					{/* Category Filter */}
 					{/* <div className="category-filter">
 						<button onClick={clearCategoryFilter}>All</button>

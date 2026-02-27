@@ -58,6 +58,7 @@ const AddProductForm = () => {
 	// server action
 
 	const handleSubmit = async (e) => {
+		e.preventDefault();
 		addProduct(product);
 		//    await fetch(``)
 	};

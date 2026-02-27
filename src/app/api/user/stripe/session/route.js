@@ -111,15 +111,19 @@ export async function POST(req) {
 			console.log("Stripe checkout session created:", session.id);
 		}
 
+		console.log(session);
+
 		return NextResponse.json({
 			sessionId: session.id,
 			url: session.url,
 		});
 	} catch (err) {
 		// Log error details for debugging (but not to client)
-		if (process.env.NODE_ENV === "development") {
-			console.error("Stripe checkout error:", err);
-		}
+		// if (process.env.NODE_ENV === "development") {
+		// 	console.error("Stripe checkout error:", err);
+		// }
+
+		console.error("Stripe checkout error:", err);
 
 		// Generic error message for client
 		return NextResponse.json(

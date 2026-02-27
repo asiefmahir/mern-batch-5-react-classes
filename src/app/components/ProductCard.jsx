@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useCart } from "../contexts/Cart";
+import Image from "next/image";
 
 // interactivity -> next
 
@@ -11,14 +11,19 @@ import { useCart } from "../contexts/Cart";
 
 // google form -> seo
 // google classroom ->
-
+// rsc payload -> binary payload
 function ProductCard({ product }) {
 	const { addToCart } = useCart();
 	return (
 		<div className="ingredient">
 			<div className="ingredient__image">
 				<figure>
-					<img src={product.image} alt={product.title} />
+					<Image
+						width={1600}
+						height={900}
+						src={product.image}
+						alt={product.title}
+					/>
 				</figure>
 			</div>
 			<div className="ingredient__title">
